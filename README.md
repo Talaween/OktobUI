@@ -1,2 +1,2 @@
-# YummyRecipesAPI
-this is the backend RESTful API for Yummy.net
+# OktobAPI
+this is the backend RESTful API for Oktob Blog
