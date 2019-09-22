@@ -1,0 +1,25 @@
+{
+  "name": "oktobapi",
+  "version": "1.0.0",
+  "description": "Backend RESTful API for Oktob",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.coventry.ac.uk/ab8505/OktobAPI.git"
+  },
+  "keywords": [
+    "Oktob",
+    "RESTful",
+    "API"
+  ],
+  "author": "Mahmoud Awad",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.8.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
+}
