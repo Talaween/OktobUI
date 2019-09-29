@@ -1,224 +1,69 @@
-exports.add = function(conData, req, callback){
-	
-	//first connect to DB
-	db.connect(conData, function(err, data){
-		
-		//when done check for any error
-		if (err) {
-			callback(err);
-			return;
-		}	
-		//TODO: server validation
-		
-		//if no error prepare our user object with the values sent by the client
-		var article = {
-		  title: req.body['email'],
-		  forename: req.body['forename'],
-		  surname: req.body['surname'],
-		  created: new Date(),
-        };
-        
-        //validate input
-        if(user.email.length > 32){
-            callback({message:"email cannot be longer than 32 characters"});
-            return;
-        }
-           
-        if(user.forename.length > 16){
-            callback({message:"email cannot be longer than 16 characters"});
-            return;
-        }
-            
-        if(user.surname.length > 16){
-            callback({message:"email cannot be longer than 16 characters"});
-            return;
-        }
-            
-            
-		//perform the query
-		data.query('INSERT INTO users SET ?', user, function (err, result) {
-			//return control to the calling module
-			callback(err, user);
-		});
-	});
-};
+var mysql = require('promise-mysql');
+var info = require('../config');
 
-exports.getAll = function(conData, req, callback){
-	
-	//first connect to DB
-	db.connect(conData, function(err, data){
-		
-		//when done check for any error
-		if (err) {
-			callback(err);
-			return;
-		}	
-		
-		auth.loginUser(conData, req, function(err, result){
-			
-			if (err) {
-				callback(err);
-				return;
-			}
-			
-			if(result.login === "success"){
-				
-				//perform the query
-				data.query('SELECT * FROM users', function (err, result) {
-					//return control to the calling module
-					
-					let data = JSON.stringify(result);
-					
-					callback(err, data);
-				});
-			}
-			else{
-				let err = {message:"username or password is incorrect"};
-				callback(err);
-			}
-			
-		});		
-		
-	});
-};
+//get an article by its id
+exports.getById = async (id) => {
+	try {
 
-exports.getById = function(conData, req, callback){
-	
-	//first connect to DB
-	db.connect(conData, function(err, data){
-		
-		//when done check for any error
-		if (err) {
-			callback(err);
-			return;
-		}	
+		//first connect to the database
+        const connection = await mysql.createConnection(info.config);
 
-		auth.loginUser(conData, req, function(err, result){
-			
-			if (err) {
-				callback(err);
-				return;
-			}
-			
-			if(result.login === "success"){
-				
-				let id = req.params.id;
-				
-				//perform the query
-				data.query('SELECT * FROM users WHERE id = ' + id , function (err, result) {
-					//return control to the calling module
-					
-					let data = JSON.stringify(result);
-					
-					callback(err, data);
-				});
-			}
-			else{
-				let err = {message:"username or password is incorrect"};
-				callback(err);
-			}
-			
-		});				
+        //this is the sql statement to execute
+		let sql = `SELECT * FROM articles
+					WHERE id = ${id}
+				`;
+		//wait for the async code to finish
+        let data = await connection.query(sql);
 		
-	});
-};
+		//wait until connection to db is closed 
+		await connection.end();
 
-exports.deleteById = function(conData, req, callback){
-	
-	//first connect to DB
-	db.connect(conData, function(err, data){
-		
-		//when done check for any error
-		if (err) {
-			callback(err);
-			return;
-		}	
+		//return the result
+        return data;
 
-		auth.loginUser(conData, req, function(err, result){
-			
-			if (err) {
-				callback(err);
-				return;
-			}
-			
-			if(result.login === "success"){
-				
-				let id = req.params.id;
-				
-				//perform the query
-				data.query('DELETE FROM users WHERE id = ' + id , function (err, result) {
-					//return control to the calling module
-					
-					let data = JSON.stringify(result);
-					
-					callback(err, data);
-				});
-			}
-			else{
-				let err = {message:"username or password is incorrect"};
-				callback(err);
-			}
-			
-		});				
-		
-	});
-};
+    } catch (error) {
+		//if an error occured please log it and throw an exception
+        console.log(error);
+        ctx.throw(500, 'An Error has occured');
+    }
+}
 
-exports.updateById = function(conData, req, callback){
-	
-	//first connect to DB
-	db.connect(conData, function(err, data){
+exports.getAll = async (page, limit, order)=> {
+	try {
+
+        const connection = await mysql.createConnection(info.config);
+
+        //this is the sql statement to execute
+		let sql = `SELECT * FROM articles
+				`;
+        let data = await connection.query(sql);
 		
-		//when done check for any error
-		if (err) {
-			callback(err);
-			return;
-		}	
+		await connection.end();
+
+        return data;
+
+    } catch (error) {
+        console.log(error);
+        ctx.throw(500, 'An Error has occured');
+    }
+}
+exports.add = async (article) => {
+	try {
+
+        const connection = await mysql.createConnection(info.config);
+
+        //this is the sql statement to execute
+		let sql = `INSERT INTO articles
+					SET ?
+				`;
+        let data = await connection.query(sql, article);
 		
-		auth.loginUser(conData, req, function(err, result){
-			
-			if (err) {
-				callback(err);
-				return;
-			}
-			
-			if(result.login === "success"){
-				
-				let id = req.params.id;
-				
-				//if no error prepare our user object with the values sent by the client
-				var user = {
-				  email: req.body['email'],
-				  forename: req.body['forename'],
-				  surname: req.body['surname']				 
-                };
-                //validate input
-                if(user.email.length > 32){
-                    callback({message:"email cannot be longer than 32 characters"});
-                    return;
-                }
-                
-                if(user.forename.length > 16){
-                    callback({message:"email cannot be longer than 16 characters"});
-                    return;
-                }
-                    
-                if(user.surname.length > 16){
-                    callback({message:"email cannot be longer than 16 characters"});
-                    return;
-                }
-				//perform the query
-				data.query('UPDATE users SET ? WHERE id = ' + req.params.id, user, function (err, result) {
-					//return control to the calling module
-					callback(err, user);
-				});
-			}
-			else{
-				let err = {message:"username or password is incorrect"};
-				callback(JSON.stringify(err));
-			}
-			
-		});		
-		
-	});
-};
+		await connection.end();
+
+        return data;
+
+    } catch (error) {
+        console.log(error);
+        ctx.throw(500, 'An Error has occured');
+    }
+}

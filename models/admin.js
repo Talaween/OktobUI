@@ -2,7 +2,7 @@
 var mysql = require('promise-mysql');
 var info = require('../config');
 
-exports.createTables = async (id)=> {
+exports.createTables = async ()=> {
 
     try {
 

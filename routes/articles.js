@@ -1,4 +1,6 @@
 var Router = require('koa-router');
+var model = require('../models/article');
+
 var router = Router({
    prefix: '/api/v1.0/articles'
 });  //Prefixed all routes with /api/v1.0/articles
@@ -13,43 +15,34 @@ var articles = [  {title:'hello article', fullText:'some text here to fill the b
                ];
 
 //Routes will go here
-router.get('/', getAll);
-//the id should be a number greater than or equal 1
-router.get('/:id([0-9]{1,})', getById);
-//note that we have injected the body parser onlyin the POST request
-router.post('/', bodyParser(), createArticle);
-router.put('/:id', updateArticle);
-router.del('/:id', deleteArticle);
-
-function getAll(cnx, next){
-  cnx.body = articles;
+router.get('/', async (cnx, next) => {
+   let id = cnx.params.id;
+   cnx.body = await model.getAll(id);
   
-}
-
-function getById(cnx, next){
+});
+//the id should be a number greater than or equal 1
+router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
    let id = cnx.params.id;
+   cnx.body = await model.getById(id);
+});
 
-   if((id < articles.length+1) && (id > 0))
-      cnx.body = articles[id-1]
-   else
-      cnx.body = {message:'NOT Found'}
-}
+//note that we have injected the body parser onlyin the POST request
+router.post('/', bodyParser(), async (cnx, next) =>{
 
-function createArticle(cnx, next){
-
-   let newArticle = {title:cnx.request.body.title, fullText:cnx.request.body.fullText};
-   articles.push(newArticle);
+   let newArticle = {title:cnx.request.body.title, allText:cnx.request.body.allText};
+   await model.add(newArticle);
    cnx.body = {message:"added successfully"};
 
-}
-
-function updateArticle(cnx, next){
+});
+router.put('/:id', async (cnx, next) =>{
    //TODO: edit an article
-}
+   
+});
+router.del('/:id', async (cnx, next) =>{
+   //TODO: edit an article
+   
+});
 
-function deleteArticle(cnx, next){
-   //TODO: delete an article
-}
 
 module.exports = router;
