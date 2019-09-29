@@ -8,12 +8,6 @@ var router = Router({
 //because we are going to parse POST parameters we will import koa-bodyparser
 var bodyParser = require('koa-bodyparser');
 
-//temporarily define some random articles in an array
-var articles = [  {title:'hello article', fullText:'some text here to fill the body'}, 
-                  {title:'another article', fullText:'again here is some text here to fill the body'},
-                  {title:'coventry university ', fullText:'some news about coventry university in this article'}
-               ];
-
 //Routes will go here
 router.get('/', async (cnx, next) => {
    let id = cnx.params.id;
