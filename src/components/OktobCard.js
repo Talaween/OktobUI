@@ -31,9 +31,9 @@ class Hello extends React.Component {
       />
     }
     actions={[
-      <OktobIcon type="like" count={this.props.likes} />,
-      <OktobIcon type="message" count={this.props.comments} />,
-      <OktobIcon type="pushpin" />,
+      <OktobIcon type="like" count={this.props.likes} selected={this.props.liked}/>,
+      <OktobIcon type="message" count={this.props.comments}  />,
+      <OktobIcon type="pushpin" selected={this.props.pinned} />,
     ]}
   >
     <Meta

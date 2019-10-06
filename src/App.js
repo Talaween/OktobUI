@@ -15,7 +15,7 @@ function App() {
             "likes": 14,
             "comments":4,
             "pinned": false,
-            "liked": false
+            "liked": true
         },
         {
             "id": 2,
@@ -24,7 +24,7 @@ function App() {
             "imgURL" : "https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
             "likes": 5,
             "comments":3,
-            "pinned": false,
+            "pinned": true,
             "liked": false
         },
         {
@@ -44,8 +44,8 @@ function App() {
             "imgURL" : "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
             "likes": 14,
             "comments":4,
-            "pinned": false,
-            "liked": false
+            "pinned": true,
+            "liked": true
         },
         {
             "id": 5,

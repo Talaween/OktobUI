@@ -26,6 +26,7 @@ class Hello extends React.Component {
             {element !== null ? (
             <OktobCard id={element.id}  title={element.title} description={element.description}
                 likes={element.likes} comments={element.comments} selected={element.liked} 
+                liked={element.liked} pinned={element.pinned}
                 imgURL = {element.imgURL} clicked={this.clickItem} />) : null}
         </Col> 
         
