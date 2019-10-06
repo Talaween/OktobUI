@@ -1,109 +1,134 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Card, Row, Col } from 'antd'; 
+import { Row, Col } from 'antd'; 
 import Hello from './components/Hello';
+import HomeGrid from './components/HomeGrid';
 
 function App() {
-  let Meta = Card.Meta;
+
+  let articles = [
+        {
+            "id": 1,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+            "likes": 14,
+            "comments":4,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 2,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
+            "likes": 5,
+            "comments":3,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 3,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+            "likes": 7,
+            "comments":2,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 4,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+            "likes": 14,
+            "comments":4,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 5,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
+            "likes": 5,
+            "comments":3,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 6,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+            "likes": 7,
+            "comments":2,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 7,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+            "likes": 14,
+            "comments":4,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 8,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80",
+            "likes": 5,
+            "comments":3,
+            "pinned": false,
+            "liked": false
+        },
+        {
+            "id": 9,
+            "title":"article 1",
+            "description": "some desription about the article",
+            "imgURL" : "https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+            "likes": 7,
+            "comments":2,
+            "pinned": false,
+            "liked": false
+        },
+        {
+          "id": 10,
+          "title":"article 1",
+          "description": "some desription about the article",
+          "imgURL" : "https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+          "likes": 7,
+          "comments":2,
+          "pinned": false,
+          "liked": false
+      },
+      {
+        "id": 11,
+        "title":"article 1",
+        "description": "some desription about the article",
+        "imgURL" : "https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80",
+        "likes": 7,
+        "comments":2,
+        "pinned": false,
+        "liked": false
+    }
+    ];
 
   return (
     <div style={{ background: '#ECECEC', padding: '30px' }}>
       <Row type="flex" justify="center">
         <Col span={4}>
-          <Hello name="Mahmoud" />
+          <Hello  name="Mahmoud" />
         </Col>
       </Row>
       
-      <Row type="flex" justify="center">
-        <Col span={6}> 
-          <Card
-              hoverable
-              style={{ width: 320 }}
-              cover={<img alt="example" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />}
-            >
-              <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-        <Col span={6}> 
-        <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-        </Card>
-        </Col>
-        <Col span={6}> 
-          <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-      </Row>
-      <br/>
-      <Row type="flex" justify="center">
-        <Col span={6}> 
-          <Card
-              hoverable
-              style={{ width: 320 }}
-              cover={<img alt="example" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />}
-            >
-              <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-        <Col span={6}> 
-        <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-        <Col span={6}> 
-          <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-      </Row>
-      <br/>
-      <Row type="flex" justify="center">
-        <Col span={6}> 
-          <Card
-              hoverable
-              style={{ width: 320 }}
-              cover={<img alt="example" src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />}
-            >
-              <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-        <Col span={6}> 
-        <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-        <Col span={6}> 
-          <Card
-            hoverable
-            style={{ width: 320 }}
-            cover={<img alt="example" src="https://images.unsplash.com/photo-1548092304-e0205cb0031b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" />}
-          >
-            <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-          </Card>
-        </Col>
-      </Row>
+      <HomeGrid articles={articles} />
+      
     </div>
   );
 }

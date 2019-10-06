@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Icon } from 'antd'; 
+import { Card } from 'antd'; 
+import OktobIcon from './OktobIcon';
 
 class Hello extends React.Component {
 
@@ -8,20 +9,38 @@ class Hello extends React.Component {
     this.state = {
      
     }
+
+    this.handleClick = this.handleClick.bind(this);
     
   }
-
  
+  handleClick(){
+    this.props.clicked(this.props.id);
+  }
   render() {
-    return <Card
-    hoverable
+    //reference to the meta component of the card
+    let Meta = Card.Meta;
+    //customise the ant-design card component
+    return <Card 
     style={{ width: 320 }}
-    cover={<img alt="example" src="https://images.unsplash.com/photo-1498993337246-d6dc6b424efe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1049&q=80" />}
+    cover={
+      <img
+        alt={this.props.imgAlt}
+        src={this.props.imgURL} 
+        onClick={this.handleClick}
+      />
+    }
+    actions={[
+      <OktobIcon type="like" count={this.props.likes} />,
+      <OktobIcon type="message" count={this.props.comments} />,
+      <OktobIcon type="pushpin" />,
+    ]}
   >
-    <Meta title="This is the title of article 3" description="article 3 talks about some topic and this is it..." />
-
-    <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
-</Card>;
+    <Meta
+      title={this.props.title}
+      description={this.props.description}
+    />
+  </Card>;
   }
 }
 
