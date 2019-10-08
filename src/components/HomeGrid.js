@@ -2,7 +2,7 @@ import React from 'react';
 import {Col, Row} from 'antd';
 import OktobCard from './OktobCard';
 
-class Hello extends React.Component {
+class HomeGrid extends React.Component {
 
     constructor(props){
         super(props);
@@ -88,7 +88,7 @@ class Hello extends React.Component {
     }
   }
   
-  export default Hello;
+  export default HomeGrid;
 
 
 

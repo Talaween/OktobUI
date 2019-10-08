@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'antd'; 
 import OktobIcon from './OktobIcon';
 
-class Hello extends React.Component {
+class OktobCard extends React.Component {
 
   constructor(props){
     super(props);
@@ -44,4 +44,4 @@ class Hello extends React.Component {
   }
 }
 
-export default Hello;
+export default OktobCard;
