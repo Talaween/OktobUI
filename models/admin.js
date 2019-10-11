@@ -1,4 +1,6 @@
 
+'use strict';
+
 var mysql = require('promise-mysql');
 var info = require('../config');
 

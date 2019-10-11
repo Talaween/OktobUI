@@ -1,3 +1,5 @@
+'use strict';
+
 var mysql = require('promise-mysql');
 var info = require('../config');
 
@@ -23,8 +25,7 @@ exports.getById = async (id) => {
 
     } catch (error) {
 		//if an error occured please log it and throw an exception
-        console.log(error);
-        ctx.throw(500, 'An Error has occured');
+        throw new Error(error)
     }
 }
 
@@ -44,7 +45,7 @@ exports.getAll = async (page, limit, order)=> {
 
     } catch (error) {
         console.log(error);
-        ctx.throw(500, 'An Error has occured');
+        throw new Error(error);
     }
 }
 exports.add = async (article) => {
@@ -52,6 +53,11 @@ exports.add = async (article) => {
 
         const connection = await mysql.createConnection(info.config);
 
+        //TODO validate the user input
+        if(article.title === undefined){
+            throw {message:'title is required', status:400};
+
+        }
         //this is the sql statement to execute
 		let sql = `INSERT INTO articles
 					SET ?
@@ -63,7 +69,6 @@ exports.add = async (article) => {
         return data;
 
     } catch (error) {
-        console.log(error);
-        ctx.throw(500, 'An Error has occured');
+        throw error;
     }
 }

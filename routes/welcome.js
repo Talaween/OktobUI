@@ -1,3 +1,5 @@
+'use strict';
+
 var Router = require('koa-router');
 var router = Router({
    prefix: '/api/v1.0'

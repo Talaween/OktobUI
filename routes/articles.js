@@ -1,3 +1,5 @@
+'use strict';
+
 var Router = require('koa-router');
 var model = require('../models/article');
 
@@ -18,22 +20,36 @@ router.get('/', async (cnx, next) => {
 router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
    let id = cnx.params.id;
-   cnx.body = await model.getById(id);
+   let data = await model.getById(id);
+
+   if(data.length === 0){
+      cnx.response.status = 404;
+      cnx.body = {message:"article not found"}
+   }
+   else
+      cnx.body = data;
 });
 
 //note that we have injected the body parser onlyin the POST request
 router.post('/', bodyParser(), async (cnx, next) =>{
 
    let newArticle = {title:cnx.request.body.title, allText:cnx.request.body.allText};
-   await model.add(newArticle);
-   cnx.body = {message:"added successfully"};
+   try{
+      let data = await model.add(newArticle);
+      cnx.body = {message:"added successfully"};
+   }
+   catch(error){
+      cnx.response.status = error.status;
+      cnx.body = {error:error.message};
+   }
+   
 
 });
-router.put('/:id', async (cnx, next) =>{
+router.put('/:id([0-9]{1,})', async (cnx, next) =>{
    //TODO: edit an article
    
 });
-router.del('/:id', async (cnx, next) =>{
+router.del('/:id([0-9]{1,})', async (cnx, next) =>{
    //TODO: edit an article
    
 });
