@@ -1,21 +1,15 @@
 'use strict';
 
 var Router = require('koa-router');
-var model = require('../models/article');
+var model = require('../models/users');
 
 var router = Router({
-   prefix: '/api/v1.0/articles'
+   prefix: '/api/v1.0/users'
 });  //Prefixed all routes with /api/v1.0/articles
 
 //because we are going to parse POST parameters we will import koa-bodyparser
 var bodyParser = require('koa-bodyparser');
 
-//Routes will go here
-router.get('/', async (cnx, next) => {
-   let id = cnx.params.id;
-   cnx.body = await model.getAll(id);
-  
-});
 //the id should be a number greater than or equal 1
 router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
@@ -24,7 +18,7 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
    if(data.length === 0){
       cnx.response.status = 404;
-      cnx.body = {message:"article not found"}
+      cnx.body = {message:"user not found"}
    }
    else
       cnx.body = data;
@@ -33,11 +27,18 @@ router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 //note that we have injected the body parser onlyin the POST request
 router.post('/', bodyParser(), async (cnx, next) =>{
 
-   let newArticle = {title:cnx.request.body.title, allText:cnx.request.body.allText};
+    console.log(cnx.request.body);
+
+    //prevent server crash if values is undefined
+    let newUser = {
+       email : cnx.request.body.values === undefined ? undefined: cnx.request.body.values.email, 
+       password : cnx.request.body.values === undefined ? undefined: cnx.request.body.values.password,
+       passwordConfirmation: cnx.request.body.values === undefined ? undefined: cnx.request.body.values.passwordConfirmation
+    };
    try{
-      await model.add(newArticle);
+      await model.add(newUser);
       cnx.response.status = 201;
-      cnx.body = {message:"added successfully"};
+      cnx.body = {message:"user was added successfully"};
    }
    catch(error){
       cnx.response.status = error.status;
@@ -47,11 +48,11 @@ router.post('/', bodyParser(), async (cnx, next) =>{
 
 });
 router.put('/:id([0-9]{1,})', async (cnx, next) =>{
-   //TODO: edit an article
+   //TODO: edit a user
    
 });
 router.del('/:id([0-9]{1,})', async (cnx, next) =>{
-   //TODO: edit an article
+   //TODO: delete a user
    
 });
 

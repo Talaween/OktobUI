@@ -7,13 +7,13 @@ var info = require('../config');
 exports.getById = async (id) => {
 	try {
 
-		//first connect to the database
-        const connection = await mysql.createConnection(info.config);
-
         //this is the sql statement to execute
 		let sql = `SELECT * FROM articles
 					WHERE id = ${id}
-				`;
+                `;
+        //first connect to the database
+        const connection = await mysql.createConnection(info.config);
+        
 		//wait for the async code to finish
         let data = await connection.query(sql);
 		

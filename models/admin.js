@@ -25,11 +25,10 @@ exports.createTables = async ()=> {
 
         sql = `CREATE TABLE users (
                 ID INT NOT NULL AUTO_INCREMENT,
-                email VARCHAR(32),
+                email VARCHAR(32) UNIQUE,
                 forename VARCHAR(16),
                 surname VARCHAR(16),
                 pwd VARCHAR(256),
-                pwdSalt VARCHAR(32),
                 created DATETIME,
                 PRIMARY KEY (ID)
             )`;
@@ -40,7 +39,6 @@ exports.createTables = async ()=> {
 
     } catch (error) {
         console.log(error);
-        ctx.throw(500, 'An Error has occured');
     }
 
 }
