@@ -6,8 +6,36 @@ class HomeGrid extends React.Component {
 
     constructor(props){
         super(props);
+        
+        this.state = {
+            items : []
+        }
 
         this.clickItem = this.clickItem.bind(this);
+    }
+
+    
+    componentDidMount(){
+        fetch("http://localhost:3000/api/v1.0/articles")
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log(result)
+            this.setState({
+                isLoaded: true,
+                items: result
+            });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+            }
+        )
     }
 
     clickItem(id){
@@ -55,7 +83,7 @@ class HomeGrid extends React.Component {
         let rowNumber = 0;
 
         //iterate through all the articles in the json data
-        while(counter < this.props.articles.length){
+        while(counter < this.state.items.length){
 
             //initialise the array to store articles for each new row
             let articlesPerRow = [];
@@ -64,8 +92,8 @@ class HomeGrid extends React.Component {
             for(let i=0; i < 3; i++){
 
                 //make sure we do not overflow the array
-                if(counter < this.props.articles.length)
-                    articlesPerRow.push(this.props.articles[counter]);
+                if(counter < this.state.items.length)
+                    articlesPerRow.push(this.state.items[counter]);
                 else
                     articlesPerRow.push(null);
 
