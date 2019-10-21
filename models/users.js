@@ -52,30 +52,28 @@ exports.findOne = async (authData, callback) => {
         await connection.end();
         
         if(data.length > 0){
-            //check if the hashed password matches
+            //check if the hashed passwords match
             let pass = bcrypt.compareSync(authData.password, data[0].pwd);
             
             if(pass)
-                callback(null, data[0]); //if yes callback with the user data
+                //if yes callback with the user data
+                callback(null, data[0]); 
             else
-                callback(null, false); // otherwise callback with false
+                // otherwise callback with false
+                callback(null, false); 
         }
         else{
             //no such email was found
             callback(null, false);
         }
-
-		//return the result
-        return data;
-
     } catch (error) {
         if(error.status === undefined)
             error.status = 500;
 		//if an error occured please log it and throw an exception
         callback(error);
     }
-
 }
+
 exports.add = async (user) => {
 	try {
         

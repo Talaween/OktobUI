@@ -16,10 +16,11 @@ var app = new Koa();
 
 app.use(cors());
 
+//this import will run the code in the auth.js
 require('./auth');
 app.use(passport.initialize());
 
-////apply the routes as a middleware
+//apply the routes as a middleware
 app.use(welcome.routes());
 app.use(admin.routes());
 app.use(users.routes());
