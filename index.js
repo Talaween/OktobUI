@@ -3,6 +3,7 @@
 //import koa
 var Koa = require('koa');
 const cors = require('@koa/cors');
+const passport = require('koa-passport');
 
 //import all the routes
 var welcome = require('./routes/welcome');
@@ -15,6 +16,9 @@ var app = new Koa();
 
 app.use(cors());
 
+require('./auth');
+app.use(passport.initialize());
+
 ////apply the routes as a middleware
 app.use(welcome.routes());
 app.use(admin.routes());
@@ -26,5 +30,5 @@ app.use(articles.routes());
 var port = process.env.PORT || 3000;
 
 //run the werver on port 3000
-app.listen(port);
 
+app.listen(port);

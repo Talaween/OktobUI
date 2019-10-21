@@ -1,6 +1,8 @@
 'use strict';
 
 var Router = require('koa-router');
+var passport = require('koa-passport');
+
 var model = require('../models/users');
 
 var router = Router({
@@ -13,15 +15,26 @@ var bodyParser = require('koa-bodyparser');
 //the id should be a number greater than or equal 1
 router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
-   let id = cnx.params.id;
-   let data = await model.getById(id);
+   //to protect the resource, only authenticated users can access it
+   return passport.authenticate('basic', async function(err, user, info, status) {
+      if(err){
+        cnx.body = err
+      }
+      else if (user === false) {
+       cnx.body = { success: false }
+       cnx.throw(401)
+      } else {
+         let id = cnx.params.id;
+         let data = await model.getById(id);
 
-   if(data.length === 0){
-      cnx.response.status = 404;
-      cnx.body = {message:"user not found"}
-   }
-   else
-      cnx.body = data;
+         if(data.length === 0){
+            cnx.response.status = 404;
+            cnx.body = {message:"user not found"}
+         }
+         else
+            cnx.body = data;
+         }
+   })(cnx)
 });
 
 //note that we have injected the body parser onlyin the POST request

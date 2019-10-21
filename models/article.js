@@ -44,8 +44,9 @@ exports.getAll = async (page, limit, order)=> {
         return data;
 
     } catch (error) {
-        console.log(error);
-        throw new Error(error);
+        if(error.status === undefined)
+            error.status = 500;
+        throw error;
     }
 }
 exports.add = async (article) => {
@@ -69,6 +70,8 @@ exports.add = async (article) => {
         return data;
 
     } catch (error) {
+        if(error.status === undefined)
+            error.status = 500;
         throw error;
     }
 }

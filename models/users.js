@@ -27,12 +27,55 @@ exports.getById = async (id) => {
         return data;
 
     } catch (error) {
+        if(error.status === undefined)
+            error.status = 500;
 		//if an error occured please log it and throw an exception
-        throw new Error(error)
+        throw error;
     }
 }
 
+//this method is to verify a user does exist in db with such email and pwd
+exports.findOne = async (authData, callback) => {
 
+    try {
+		//first connect to the database
+        const connection = await mysql.createConnection(info.config);
+
+        //this is the sql statement to execute
+		let sql = `SELECT * FROM users
+					WHERE email = \'${authData.email}\'
+				`;
+		//wait for the async code to finish
+        let data = await connection.query(sql);
+        
+        //wait until connection to db is closed 
+        await connection.end();
+        
+        if(data.length > 0){
+            //check if the hashed password matches
+            let pass = bcrypt.compareSync(authData.password, data[0].pwd);
+            
+            if(pass)
+                callback(null, data[0]); //if yes callback with the user data
+            else
+                callback(null, false); // otherwise callback with false
+        }
+        else{
+            //no such email was found
+            callback(null, false);
+        }
+
+		//return the result
+        return data;
+
+    } catch (error) {
+        if(error.status === undefined)
+            error.status = 500;
+		//if an error occured please log it and throw an exception
+        callback(error);
+    }
+
+}
 exports.add = async (user) => {
 	try {
         

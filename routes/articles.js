@@ -11,11 +11,15 @@ var router = Router({
 var bodyParser = require('koa-bodyparser');
 
 //Routes will go here
-router.get('/', async (cnx, next) => {
-   let id = cnx.params.id;
-   cnx.body = await model.getAll(id);
-  
-});
+router.get('/', async (cnx) => {
+   try{
+      cnx.body = await model.getAll();
+   }catch(error){
+      cnx.response.status = error.status;
+      cnx.body = {message:error.message};
+   }
+ })
+
 //the id should be a number greater than or equal 1
 router.get('/:id([0-9]{1,})', async (cnx, next) =>{
 
