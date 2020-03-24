@@ -13,6 +13,32 @@ var bodyParser = require('koa-bodyparser');
 //Routes will go here
 router.get('/', async (cnx) => {
    try{
+      let limit = (cnx.request.query.limit === undefined ? 32:cnx.request.query.limit);
+      let page = (cnx.request.query.page === undefined ? 1:cnx.request.query.page);
+
+      let fields = cnx.request.query.fields;
+
+      //validate the query parameters
+      limit = limit > 200 ? 200:limit;
+      limit = limit < 1 ? 32: limit;
+
+      page = page < 1 ? 1 : page;
+
+      let resource = {
+         name: "ahmed",
+         phone: "0784957",
+         email: "scaryboss:yahoo.com"
+      }
+
+      //define an empty object
+      let partial = {};
+
+      //add properties to the object as requested
+      for(let i = 0; i < fields.length; i++)
+         partial[fields[i]] = resource[fields[i]];
+
+      console.log(partial);
+
       cnx.body = await model.getAll();
    }catch(error){
       cnx.response.status = error.status;
